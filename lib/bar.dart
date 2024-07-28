@@ -1,7 +1,12 @@
 library bar;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'src/element.dart';
+export 'src/mode.dart';
+export 'src/elements/adapter.dart';
+export 'src/elements/divider.dart';
+export 'src/elements/expandable.dart';
+export 'src/elements/gap.dart';
+export 'src/elements/item.dart';
+export 'src/style.dart';
+export 'src/controller.dart';
+export 'src/bar.dart';
