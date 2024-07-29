@@ -9,7 +9,7 @@ class _BuildBarElements extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: _children,
+      children: _children.map((e) => Flexible(child: (e))).toList(),
     );
   }
 
@@ -17,8 +17,6 @@ class _BuildBarElements extends StatelessWidget {
         (e) {
           if (e is BarItem) {
             return _BuildBarItem(e);
-          } else if (e is ExpandableBarItem) {
-            return _BuildExpandableBarItem(e);
           } else if (e is BarDivider) {
             return _BuildBarDivider(e);
           } else if (e is BarGap) {

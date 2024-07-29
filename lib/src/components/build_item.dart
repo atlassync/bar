@@ -13,6 +13,7 @@ class _BuildBarItemState extends State<_BuildBarItem> {
   late BarItemTheme _style;
   late BarController _controller;
   late bool _isSelected;
+  bool _highlight = false;
 
   @override
   void didChangeDependencies() {
@@ -29,6 +30,13 @@ class _BuildBarItemState extends State<_BuildBarItem> {
     });
   }
 
+  void _updateHighlight(bool value) {
+    if (value == _highlight) return;
+    setState(() {
+      _highlight = value;
+    });
+  }
+
   @override
   void dispose() {
     _controller.notifier.removeListener(_updateSelection);
@@ -42,7 +50,91 @@ class _BuildBarItemState extends State<_BuildBarItem> {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: Implement BarItem build method.
-    throw UnimplementedError();
+    return Padding(
+      padding: _style.margin,
+      child: InkWell(
+        borderRadius: _style.borderRadius.resolve(null),
+        onTap: onTap,
+        onHover: _updateHighlight,
+        child: _buildContent(),
+      ),
+    );
+  }
+
+  Widget _buildContent() {
+    return ClipRRect(
+      borderRadius: _style.borderRadius,
+      child: Container(
+        padding: _style.padding,
+        decoration: BoxDecoration(
+          color: _determineBackgroundColor(),
+          border: Border(
+            left: BorderSide(
+              width: _style.selectedIndicatorWidth,
+              color: _isSelected
+                  ? _style.selectedIndicatorColor
+                  : Colors.transparent,
+            ),
+          ),
+        ),
+        child: Row(
+          children: _buildElements(),
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _buildElements() {
+    List<Widget> children = [];
+    if (widget.item.leading != null) {
+      children.add(_buildLeading());
+    }
+
+    if (BarScope.of(context).mode != BarMode.expanded) return children;
+
+    if (widget.item.title != null) {
+      children.add(SizedBox(width: _style.gap));
+      children.add(_buildTitle());
+    }
+
+    if (widget.item.trailing != null) {
+      children.add(SizedBox(width: _style.gap));
+      children.add(const Spacer());
+      children.add(_buildTrailing());
+    }
+
+    return children;
+  }
+
+  Widget _buildLeading() {
+    return Flexible(
+      child: widget.item.leading!,
+    );
+  }
+
+  Widget _buildTitle() {
+    return Expanded(
+      flex: 4,
+      child: Text(
+        widget.item.title!,
+        style: _isSelected ? _style.selectedTitleStyle : _style.titleStyle,
+      ),
+    );
+  }
+
+  Widget _buildTrailing() {
+    return Flexible(
+      child: widget.item.trailing!,
+    );
+  }
+
+  Color? _determineBackgroundColor() {
+    if (_isSelected) {
+      return _style.selectedBackgroundColor;
+    } else if (_highlight) {
+      return _style.hoverBackgroundColor;
+    } else {
+      return _style.backgroundColor;
+    }
   }
 }

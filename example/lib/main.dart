@@ -22,8 +22,12 @@ class MyApp extends StatelessWidget {
         extensions: [
           const BarTheme(
             backgroundColor: Colors.black54,
-            duration: Duration(
-              microseconds: 300,
+            padding: EdgeInsets.symmetric(vertical: 48.0, horizontal: 0.0),
+            border: Border(
+              right: BorderSide(
+                color: Colors.grey,
+                width: 2.0,
+              ),
             ),
           ),
         ],
@@ -33,8 +37,12 @@ class MyApp extends StatelessWidget {
         extensions: [
           const BarTheme(
             backgroundColor: Colors.white54,
-            duration: Duration(
-              microseconds: 300,
+            padding: EdgeInsets.symmetric(vertical: 48.0, horizontal: 0.0),
+            border: Border(
+              right: BorderSide(
+                color: Colors.grey,
+                width: 2.0,
+              ),
             ),
           ),
         ],
@@ -69,7 +77,8 @@ class _HomeScreenState extends State<HomeScreen> {
         BarGap(16),
         BarItem(
           leading: Icon(Icons.home),
-          title: 'Message',
+          title: 'Home',
+          trailing: Icon(Icons.sunny),
         ),
         BarGap(16),
         BarItem(
@@ -79,23 +88,6 @@ class _HomeScreenState extends State<HomeScreen> {
         BarGap(16),
         BarDivider(),
         BarGap(16),
-        ExpandableBarItem(
-          leading: Icon(Icons.settings),
-          title: 'Settings',
-          elements: [
-            BarItem(
-              leading: Icon(Icons.palette),
-              title: 'Themes',
-            ),
-            BarDivider(),
-            BarGap(),
-            BarDivider(),
-            BarItem(
-              leading: Icon(Icons.language),
-              title: 'Languages',
-            ),
-          ],
-        ),
         BarAdapter(FlutterLogo())
       ];
 }

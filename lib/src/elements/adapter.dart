@@ -11,7 +11,6 @@ final class BarAdapter implements BarElement {
   /// The child widget that this adapter holds for the sidebar.
   final Widget child;
 
-
   /// Creates a `BarAdapter` with the given child widget for the sidebar.
   ///
   /// The [child] parameter is required and cannot be null.

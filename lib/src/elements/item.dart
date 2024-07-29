@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:bar/bar.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 //?? Element
 /// A `BarItem` class that implements the `BarElement` interface.
@@ -10,7 +10,7 @@ import 'package:flutter/widgets.dart';
 /// trailing widgets, a title, and a callback for selection.
 @immutable
 final class BarItem implements IndexableBarElement {
- /// The index of the bar element.
+  /// The index of the bar element.
   ///
   /// This property holds the index value for the bar element.
   @override
@@ -98,7 +98,7 @@ class BarItemTheme {
   final Color? hoverBackgroundColor;
 
   /// The color of the indicator shown when the item is selected.
-  final Color? selectedIndicatorColor;
+  final Color selectedIndicatorColor;
 
   /// The width of the indicator shown when the item is selected.
   ///
@@ -110,10 +110,25 @@ class BarItemTheme {
   /// Defaults to true.
   final bool showSelectedIndicator;
 
-  /// The gap between the item's content and its border.
+  /// The gap between the item's content.
   ///
   /// Defaults to 8.0.
   final double gap;
+
+  /// The padding around the content of the bar item.
+  ///
+  /// Defaults to `EdgeInsets.all(8.0)`.
+  final EdgeInsetsGeometry padding;
+
+  /// The margin around the content of the bar item.
+  ///
+  /// Defaults to `EdgeInsets.all(8.0)`.
+  final EdgeInsetsGeometry margin;
+
+  /// The border radius of the bar item.
+  ///
+  /// Defaults to `BorderRadius.circular(4.0)`.
+  final BorderRadiusGeometry borderRadius;
 
   /// Creates a `BarItemTheme`.
   ///
@@ -125,10 +140,13 @@ class BarItemTheme {
     this.backgroundColor,
     this.selectedBackgroundColor,
     this.hoverBackgroundColor,
-    this.selectedIndicatorColor,
+    this.selectedIndicatorColor = Colors.blue,
     this.selectedIndicatorWidth = 2.0,
     this.showSelectedIndicator = true,
     this.gap = 8.0,
+    this.padding = const EdgeInsets.all(8.0),
+    this.margin = const EdgeInsets.symmetric(horizontal: 8.0),
+    this.borderRadius = const BorderRadius.all(Radius.circular(4.0)),
   });
 
   /// Creates a copy of this theme with the given fields replaced with new values.
@@ -144,6 +162,9 @@ class BarItemTheme {
     double? selectedIndicatorWidth,
     bool? showSelectedIndicator,
     double? gap,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin,
+    BorderRadiusGeometry? borderRadius,
   }) {
     return BarItemTheme(
       titleStyle: titleStyle ?? this.titleStyle,
@@ -159,6 +180,9 @@ class BarItemTheme {
       showSelectedIndicator:
           showSelectedIndicator ?? this.showSelectedIndicator,
       gap: gap ?? this.gap,
+      padding: padding ?? this.padding,
+      borderRadius: borderRadius ?? this.borderRadius,
+      margin: margin ?? this.margin
     );
   }
 
@@ -180,7 +204,8 @@ class BarItemTheme {
       hoverBackgroundColor:
           Color.lerp(a?.hoverBackgroundColor, b?.hoverBackgroundColor, t),
       selectedIndicatorColor:
-          Color.lerp(a?.selectedIndicatorColor, b?.selectedIndicatorColor, t),
+          Color.lerp(a?.selectedIndicatorColor, b?.selectedIndicatorColor, t) ??
+              Colors.blue,
       selectedIndicatorWidth:
           lerpDouble(a?.selectedIndicatorWidth, b?.selectedIndicatorWidth, t) ??
               2.0,
@@ -188,6 +213,10 @@ class BarItemTheme {
           ? (a?.showSelectedIndicator ?? true)
           : (b?.showSelectedIndicator ?? true),
       gap: lerpDouble(a?.gap, b?.gap, t) ?? 8.0,
+      padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t) ?? const EdgeInsets.all(8.0),
+      margin: EdgeInsetsGeometry.lerp(a?.margin, b?.margin, t) ?? const EdgeInsets.symmetric(horizontal: 8.0),
+      borderRadius:
+          BorderRadiusGeometry.lerp(a?.borderRadius, b?.borderRadius, t) ?? const BorderRadius.all(Radius.circular(4.0)),
     );
   }
 }

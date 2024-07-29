@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 part 'components/build_divider.dart';
 part 'components/build_elements.dart';
-part 'components/build_expandable.dart';
 part 'components/build_gap.dart';
 part 'components/build_item.dart';
 
@@ -90,33 +89,29 @@ class __BarState extends State<_Bar> {
       if (element is IndexableBarElement) {
         element = element.copyWith(index: counter++);
       }
-      if (element is ExpandableBarItem) {
-        element = element.copyWith(
-            elements: _indexElements(element.elements, counter));
-      }
       return element;
     }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: _theme.duration,
-      curve: _theme.curve,
-      width: _compact ? _theme.compactWidth : _theme.expandedWidth,
-      decoration: BoxDecoration(
-        color: _theme.backgroundColor,
-        border: _theme.border,
-        borderRadius: _theme.borderRadius,
-      ),
-      child: ListView(
-        padding: _theme.padding,
-        children: [
-          if (widget.header != null) widget.header!,
-          _BuildBarElements(_indexElements(widget.elements, 0)),
-          if (widget.footer != null) widget.footer!,
-        ],
-      ),
+    return Container(
+          width: _compact ? _theme.compactWidth : _theme.expandedWidth,
+          decoration: BoxDecoration(
+            color: _theme.backgroundColor,
+            border: _theme.border,
+            borderRadius: _theme.borderRadius,
+          ),
+          child: ListView(
+            padding: _theme.padding,
+            children: [
+              if (widget.header != null) widget.header!,
+              _BuildBarElements(_indexElements(widget.elements, 0)),
+              if (widget.footer != null) widget.footer!,
+            ],
+          ),
+        
+      
     );
   }
 }
