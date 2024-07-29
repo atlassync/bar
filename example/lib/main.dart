@@ -73,21 +73,21 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  List<BarElement> get _elements => const [
-        BarGap(16),
+  List<BarElement> get _elements =>  [
+        const BarGap(16),
         BarItem(
-          leading: Icon(Icons.home),
-          title: 'Home',
-          trailing: Icon(Icons.sunny),
+          leading: (_) => const Icon(Icons.home),
+          title: (_) => 'Home',
+          trailing: (_) => const Icon(Icons.sunny),
         ),
-        BarGap(16),
+        const BarGap(16),
         BarItem(
-          leading: Icon(Icons.message_rounded),
-          title: 'Messages',
+          leading: (_) => const Icon(Icons.message_rounded),
+          title: (_) => 'Messages',
         ),
-        BarGap(16),
-        BarDivider(),
-        BarGap(16),
-        BarAdapter(FlutterLogo())
+        const BarGap(16),
+        const BarDivider(),
+        const BarGap(16),
+        const BarAdapter(FlutterLogo())
       ];
 }

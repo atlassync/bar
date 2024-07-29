@@ -68,14 +68,14 @@ class _BuildBarItemState extends State<_BuildBarItem> {
         padding: _style.padding,
         decoration: BoxDecoration(
           color: _determineBackgroundColor(),
-          border: Border(
+          border: _style.showSelectedIndicator ? Border(
             left: BorderSide(
               width: _style.selectedIndicatorWidth,
               color: _isSelected
                   ? _style.selectedIndicatorColor
                   : Colors.transparent,
             ),
-          ),
+          ) : null,
         ),
         child: Row(
           children: _buildElements(),
@@ -108,7 +108,7 @@ class _BuildBarItemState extends State<_BuildBarItem> {
 
   Widget _buildLeading() {
     return Flexible(
-      child: widget.item.leading!,
+      child: widget.item.leading!(_isSelected),
     );
   }
 
@@ -116,7 +116,7 @@ class _BuildBarItemState extends State<_BuildBarItem> {
     return Expanded(
       flex: 4,
       child: Text(
-        widget.item.title!,
+        widget.item.title!(_isSelected),
         style: _isSelected ? _style.selectedTitleStyle : _style.titleStyle,
       ),
     );
@@ -124,7 +124,7 @@ class _BuildBarItemState extends State<_BuildBarItem> {
 
   Widget _buildTrailing() {
     return Flexible(
-      child: widget.item.trailing!,
+      child: widget.item.trailing!(_isSelected),
     );
   }
 

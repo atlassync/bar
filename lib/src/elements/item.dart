@@ -4,7 +4,7 @@ import 'package:bar/bar.dart';
 import 'package:flutter/material.dart';
 
 //?? Element
-/// A `BarItem` class that implements the `BarElement` interface.
+/// A `BarItem` class that implements the `IndexableBarElement` interface.
 ///
 /// This class represents an item in a sidebar. It can contain leading and
 /// trailing widgets, a title, and a callback for selection.
@@ -19,17 +19,17 @@ final class BarItem implements IndexableBarElement {
   /// The leading widget for the sidebar item.
   ///
   /// This property is optional and can be null.
-  final Widget? leading;
+  final Widget Function(bool selected)? leading;
 
   /// The title of the sidebar item.
   ///
   /// This property is optional and can be null.
-  final String? title;
+  final String Function(bool selected)? title;
 
   /// The trailing widget for the sidebar item.
   ///
   /// This property is optional and can be null.
-  final Widget? trailing;
+  final Widget Function(bool selected)? trailing;
 
   /// The callback function to be called when the item is selected.
   ///
@@ -39,15 +39,27 @@ final class BarItem implements IndexableBarElement {
   /// The style for the bar item.
   ///
   /// This property holds the `BarItemTheme` which defines the appearance
-  /// of the bar item, including its text styles, background colors,
-  /// indicator properties, and spacing.
+  /// of the bar item.
   final BarItemTheme? style;
 
+  /// Creates a `BarItem` with the given properties.
+  const BarItem({
+    this.leading,
+    this.title,
+    this.trailing,
+    this.onSelected,
+    this.style,
+    this.index = 0,
+  });
+
+  /// Creates a copy of this bar item with the given fields replaced with new values.
+  ///
+  /// If any parameter is not provided, the current value will be used.
   @override
   BarItem copyWith({
-    Widget? leading,
-    String? title,
-    Widget? trailing,
+    Widget Function(bool selected)? leading,
+    String Function(bool selected)? title,
+    Widget Function(bool selected)? trailing,
     Function(int)? onSelected,
     BarItemTheme? style,
     int? index,
@@ -61,18 +73,6 @@ final class BarItem implements IndexableBarElement {
       index: index ?? this.index,
     );
   }
-
-  /// Creates a `BarItem` with the given properties.
-  ///
-  /// The `leading`, `title`, `trailing`, `onSelected` and `style` parameters are optional.
-  const BarItem({
-    this.leading,
-    this.title,
-    this.trailing,
-    this.onSelected,
-    this.style,
-    this.index = 0,
-  });
 }
 
 //?? Theme
@@ -89,15 +89,23 @@ class BarItemTheme {
   final TextStyle? selectedTitleStyle;
 
   /// The background color of the item.
-  final Color? backgroundColor;
+  ///
+  /// Defaults to `Colors.transparent`.
+  final Color backgroundColor;
 
   /// The background color of the item when it is selected.
-  final Color? selectedBackgroundColor;
+  ///
+  /// Defaults to `Colors.transparent`.
+  final Color selectedBackgroundColor;
 
   /// The background color of the item when it is hovered over.
-  final Color? hoverBackgroundColor;
+  ///
+  /// Defaults to `Colors.grey`.
+  final Color hoverBackgroundColor;
 
   /// The color of the indicator shown when the item is selected.
+  ///
+  /// Defaults to `Colors.blue`.
   final Color selectedIndicatorColor;
 
   /// The width of the indicator shown when the item is selected.
@@ -137,15 +145,15 @@ class BarItemTheme {
   const BarItemTheme({
     this.titleStyle,
     this.selectedTitleStyle,
-    this.backgroundColor,
-    this.selectedBackgroundColor,
-    this.hoverBackgroundColor,
+    this.backgroundColor = Colors.transparent,
+    this.selectedBackgroundColor = Colors.transparent,
+    this.hoverBackgroundColor = Colors.grey,
     this.selectedIndicatorColor = Colors.blue,
     this.selectedIndicatorWidth = 2.0,
     this.showSelectedIndicator = true,
     this.gap = 8.0,
     this.padding = const EdgeInsets.all(8.0),
-    this.margin = const EdgeInsets.symmetric(horizontal: 8.0),
+    this.margin = const EdgeInsets.all(8.0),
     this.borderRadius = const BorderRadius.all(Radius.circular(4.0)),
   });
 
@@ -181,8 +189,8 @@ class BarItemTheme {
           showSelectedIndicator ?? this.showSelectedIndicator,
       gap: gap ?? this.gap,
       padding: padding ?? this.padding,
+      margin: margin ?? this.margin,
       borderRadius: borderRadius ?? this.borderRadius,
-      margin: margin ?? this.margin
     );
   }
 
@@ -198,11 +206,14 @@ class BarItemTheme {
       titleStyle: TextStyle.lerp(a?.titleStyle, b?.titleStyle, t),
       selectedTitleStyle:
           TextStyle.lerp(a?.selectedTitleStyle, b?.selectedTitleStyle, t),
-      backgroundColor: Color.lerp(a?.backgroundColor, b?.backgroundColor, t),
-      selectedBackgroundColor:
-          Color.lerp(a?.selectedBackgroundColor, b?.selectedBackgroundColor, t),
+      backgroundColor: Color.lerp(a?.backgroundColor, b?.backgroundColor, t) ??
+          Colors.transparent,
+      selectedBackgroundColor: Color.lerp(
+              a?.selectedBackgroundColor, b?.selectedBackgroundColor, t) ??
+          Colors.transparent,
       hoverBackgroundColor:
-          Color.lerp(a?.hoverBackgroundColor, b?.hoverBackgroundColor, t),
+          Color.lerp(a?.hoverBackgroundColor, b?.hoverBackgroundColor, t) ??
+              Colors.grey,
       selectedIndicatorColor:
           Color.lerp(a?.selectedIndicatorColor, b?.selectedIndicatorColor, t) ??
               Colors.blue,
@@ -213,10 +224,13 @@ class BarItemTheme {
           ? (a?.showSelectedIndicator ?? true)
           : (b?.showSelectedIndicator ?? true),
       gap: lerpDouble(a?.gap, b?.gap, t) ?? 8.0,
-      padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t) ?? const EdgeInsets.all(8.0),
-      margin: EdgeInsetsGeometry.lerp(a?.margin, b?.margin, t) ?? const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t) ??
+          const EdgeInsets.all(8.0),
+      margin: EdgeInsetsGeometry.lerp(a?.margin, b?.margin, t) ??
+          const EdgeInsets.all(8.0),
       borderRadius:
-          BorderRadiusGeometry.lerp(a?.borderRadius, b?.borderRadius, t) ?? const BorderRadius.all(Radius.circular(4.0)),
+          BorderRadiusGeometry.lerp(a?.borderRadius, b?.borderRadius, t) ??
+              const BorderRadius.all(Radius.circular(4.0)),
     );
   }
 }
