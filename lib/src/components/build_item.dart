@@ -68,14 +68,7 @@ class _BuildBarItemState extends State<_BuildBarItem> {
         padding: _style.padding,
         decoration: BoxDecoration(
           color: _determineBackgroundColor(),
-          border: _style.showSelectedIndicator ? Border(
-            left: BorderSide(
-              width: _style.selectedIndicatorWidth,
-              color: _isSelected
-                  ? _style.selectedIndicatorColor
-                  : Colors.transparent,
-            ),
-          ) : null,
+          border: _determineBorder(),
         ),
         child: Row(
           children: _buildElements(),
@@ -136,5 +129,21 @@ class _BuildBarItemState extends State<_BuildBarItem> {
     } else {
       return _style.backgroundColor;
     }
+  }
+
+  Border? _determineBorder() {
+    if (!_style.showSelectedIndicator) return null;
+    final side = BorderSide(
+      width: _style.selectedIndicatorWidth,
+      color: _isSelected ? _style.selectedIndicatorColor : Colors.transparent,
+    );
+    return Border(
+      left: _style.indicatorAlign == BarIndicatorAlign.start
+          ? side
+          : BorderSide.none,
+      right: _style.indicatorAlign == BarIndicatorAlign.end
+          ? side
+          : BorderSide.none,
+    );
   }
 }

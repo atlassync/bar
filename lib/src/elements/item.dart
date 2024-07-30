@@ -75,7 +75,15 @@ final class BarItem implements IndexableBarElement {
   }
 }
 
-//?? Theme
+/// An enumeration for specifying the alignment of the bar indicator.
+enum BarIndicatorAlign {
+  /// Aligns the indicator to the start of the bar item.
+  start,
+
+  /// Aligns the indicator to the end of the bar item.
+  end,
+}
+
 /// A theme class for defining the appearance of an item in a sidebar.
 ///
 /// This class provides properties to customize the title style, background colors,
@@ -118,6 +126,11 @@ class BarItemTheme {
   /// Defaults to true.
   final bool showSelectedIndicator;
 
+  /// The alignment of the indicator shown when the item is selected.
+  ///
+  /// Defaults to [BarIndicatorAlign.start].
+  final BarIndicatorAlign indicatorAlign;
+
   /// The gap between the item's content.
   ///
   /// Defaults to 8.0.
@@ -151,6 +164,7 @@ class BarItemTheme {
     this.selectedIndicatorColor = Colors.blue,
     this.selectedIndicatorWidth = 2.0,
     this.showSelectedIndicator = true,
+    this.indicatorAlign = BarIndicatorAlign.start,
     this.gap = 8.0,
     this.padding = const EdgeInsets.all(8.0),
     this.margin = const EdgeInsets.all(8.0),
@@ -169,6 +183,7 @@ class BarItemTheme {
     Color? selectedIndicatorColor,
     double? selectedIndicatorWidth,
     bool? showSelectedIndicator,
+    BarIndicatorAlign? indicatorAlign,
     double? gap,
     EdgeInsetsGeometry? padding,
     EdgeInsetsGeometry? margin,
@@ -187,6 +202,7 @@ class BarItemTheme {
           selectedIndicatorWidth ?? this.selectedIndicatorWidth,
       showSelectedIndicator:
           showSelectedIndicator ?? this.showSelectedIndicator,
+      indicatorAlign: indicatorAlign ?? this.indicatorAlign,
       gap: gap ?? this.gap,
       padding: padding ?? this.padding,
       margin: margin ?? this.margin,
@@ -223,6 +239,9 @@ class BarItemTheme {
       showSelectedIndicator: t < 0.5
           ? (a?.showSelectedIndicator ?? true)
           : (b?.showSelectedIndicator ?? true),
+      indicatorAlign: t < 0.5
+          ? (a?.indicatorAlign ?? BarIndicatorAlign.start)
+          : (b?.indicatorAlign ?? BarIndicatorAlign.start),
       gap: lerpDouble(a?.gap, b?.gap, t) ?? 8.0,
       padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t) ??
           const EdgeInsets.all(8.0),

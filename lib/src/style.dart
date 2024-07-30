@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:bar/bar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 
 /// A theme extension class for defining the appearance of a sidebar.
 ///
@@ -38,6 +40,21 @@ class BarTheme extends ThemeExtension<BarTheme> {
   /// Defaults to `EdgeInsets.all(8.0)`.
   final EdgeInsetsGeometry? padding;
 
+  /// The duration of the sidebar animation.
+  ///
+  /// Defaults to `Duration(milliseconds: 300)`.
+  final Duration animationDuration;
+
+  /// The alignment of the sidebar animation.
+  ///
+  /// Defaults to `Alignment.centerLeft`.
+  final Alignment animationAlignment;
+
+  /// The curve of the sidebar animation.
+  ///
+  /// Defaults to `Curves.linear`.
+  final Curve animationCurve;
+
   /// The style of the dividers in the sidebar.
   ///
   /// Defaults to a `BarDividerTheme` with default values.
@@ -56,6 +73,9 @@ class BarTheme extends ThemeExtension<BarTheme> {
     this.border,
     this.borderRadius,
     this.padding = const EdgeInsets.all(8.0),
+    this.animationDuration = Durations.medium2,
+    this.animationAlignment = Alignment.centerLeft,
+    this.animationCurve = Curves.linear,
     this.barDividerStyle = const BarDividerTheme(),
     this.barItemStyle = const BarItemTheme(),
   });
@@ -65,8 +85,9 @@ class BarTheme extends ThemeExtension<BarTheme> {
   /// If any of the parameters are not provided, the current values will be used.
   @override
   BarTheme copyWith({
-    Duration? duration,
-    Curve? curve,
+    Duration? animationDuration,
+    Alignment? animationAlignment,
+    Curve? animationCurve,
     Color? backgroundColor,
     double? expandedWidth,
     double? compactWidth,
@@ -83,6 +104,9 @@ class BarTheme extends ThemeExtension<BarTheme> {
       border: border ?? this.border,
       borderRadius: borderRadius ?? this.borderRadius,
       padding: padding ?? this.padding,
+      animationDuration: animationDuration ?? this.animationDuration,
+      animationAlignment: animationAlignment ?? this.animationAlignment,
+      animationCurve: animationCurve ?? this.animationCurve,
       barDividerStyle: barDividerStyle ?? this.barDividerStyle,
       barItemStyle: barItemStyle ?? this.barItemStyle,
     );
@@ -107,6 +131,9 @@ class BarTheme extends ThemeExtension<BarTheme> {
       borderRadius:
           BorderRadiusGeometry.lerp(borderRadius, other.borderRadius, t),
       padding: EdgeInsetsGeometry.lerp(padding, other.padding, t) ?? padding,
+      animationDuration: lerpDuration(animationDuration, other.animationDuration, t),
+      animationAlignment: Alignment.lerp(animationAlignment, other.animationAlignment, t) ?? animationAlignment,
+      animationCurve: t < 0.5 ? animationCurve : other.animationCurve,
       barDividerStyle:
           BarDividerTheme.lerp(barDividerStyle, other.barDividerStyle, t) ??
               barDividerStyle,

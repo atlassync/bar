@@ -95,23 +95,26 @@ class __BarState extends State<_Bar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-          width: _compact ? _theme.compactWidth : _theme.expandedWidth,
-          decoration: BoxDecoration(
-            color: _theme.backgroundColor,
-            border: _theme.border,
-            borderRadius: _theme.borderRadius,
-          ),
-          child: ListView(
-            padding: _theme.padding,
-            children: [
-              if (widget.header != null) widget.header!,
-              _BuildBarElements(_indexElements(widget.elements, 0)),
-              if (widget.footer != null) widget.footer!,
-            ],
-          ),
-        
-      
+    return AnimatedSize(
+      duration: _theme.animationDuration,
+      alignment: _theme.animationAlignment,
+      curve: _theme.animationCurve,
+      child: Container(
+        width: _compact ? _theme.compactWidth : _theme.expandedWidth,
+        decoration: BoxDecoration(
+          color: _theme.backgroundColor,
+          border: _theme.border,
+          borderRadius: _theme.borderRadius,
+        ),
+        child: ListView(
+          padding: _theme.padding,
+          children: [
+            if (widget.header != null) widget.header!,
+            _BuildBarElements(_indexElements(widget.elements, 0)),
+            if (widget.footer != null) widget.footer!,
+          ],
+        ),
+      ),
     );
   }
 }
