@@ -36,6 +36,11 @@ final class BarItem implements IndexableBarElement {
   /// This property is optional and can be null. It takes an integer parameter.
   final Function(int)? onSelected;
 
+  /// Determines whether selecting the item should trigger an index change.
+  ///
+  /// This property is optional and defaults to true.
+  final bool navigate;
+
   /// The style for the bar item.
   ///
   /// This property holds the `BarItemTheme` which defines the appearance
@@ -48,6 +53,7 @@ final class BarItem implements IndexableBarElement {
     this.title,
     this.trailing,
     this.onSelected,
+    this.navigate = true,
     this.style,
     this.index = 0,
   });
@@ -61,6 +67,7 @@ final class BarItem implements IndexableBarElement {
     String Function(bool selected)? title,
     Widget Function(bool selected)? trailing,
     Function(int)? onSelected,
+    bool? navigate,
     BarItemTheme? style,
     int? index,
   }) {
@@ -69,6 +76,7 @@ final class BarItem implements IndexableBarElement {
       title: title ?? this.title,
       trailing: trailing ?? this.trailing,
       onSelected: onSelected ?? this.onSelected,
+      navigate: navigate ?? this.navigate,
       style: style ?? this.style,
       index: index ?? this.index,
     );

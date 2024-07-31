@@ -45,7 +45,9 @@ class _BuildBarItemState extends State<_BuildBarItem> {
 
   void onTap() {
     widget.item.onSelected?.call(widget.item.index);
-    _controller.index = widget.item.index;
+    if (widget.item.navigate) {
+      _controller.index = widget.item.index;
+    }
   }
 
   @override
