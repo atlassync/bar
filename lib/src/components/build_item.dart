@@ -25,16 +25,20 @@ class _BuildBarItemState extends State<_BuildBarItem> {
   }
 
   void _updateSelection() {
-    setState(() {
-      _isSelected = _controller.index == widget.item.index;
-    });
+    if (mounted) {
+      setState(() {
+        _isSelected = _controller.index == widget.item.index;
+      });
+    }
   }
 
   void _updateHighlight(bool value) {
     if (value == _highlight) return;
-    setState(() {
-      _highlight = value;
-    });
+    if (mounted) {
+      setState(() {
+        _highlight = value;
+      });
+    }
   }
 
   @override
