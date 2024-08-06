@@ -19,4 +19,6 @@ import 'package:flutter/foundation.dart';
 /// final EmptyBarElement emptyElement = EmptyBarElement();
 /// ```
 @immutable
-final class EmptyBarElement implements BarElement {}
+final class EmptyBarElement implements BarElement {
+  const EmptyBarElement();
+}
