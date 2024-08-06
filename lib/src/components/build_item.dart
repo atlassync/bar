@@ -1,25 +1,25 @@
-part of '../bar.dart';
+part of '../sidebar.dart';
 
-class _BuildBarItem extends StatefulWidget {
-  const _BuildBarItem(this.item);
+class _BuildSideBarItem extends StatefulWidget {
+  const _BuildSideBarItem(this.item);
 
-  final BarItem item;
+  final SideBarItem item;
 
   @override
-  State<_BuildBarItem> createState() => _BuildBarItemState();
+  State<_BuildSideBarItem> createState() => _BuildSideBarItemState();
 }
 
-class _BuildBarItemState extends State<_BuildBarItem> {
-  late BarItemTheme _style;
-  late BarController _controller;
+class _BuildSideBarItemState extends State<_BuildSideBarItem> {
+  late SideBarItemTheme _style;
+  late SideBarController _controller;
   late bool _isSelected;
   bool _highlight = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _style = widget.item.style ?? BarScope.of(context).theme.barItemStyle;
-    _controller = BarScope.of(context).controller;
+    _style = widget.item.style ?? SideBarScope.of(context).theme.barItemStyle;
+    _controller = SideBarScope.of(context).controller;
     _isSelected = _controller.index == widget.item.index;
     _controller.notifier.addListener(_updateSelection);
   }
@@ -89,7 +89,7 @@ class _BuildBarItemState extends State<_BuildBarItem> {
       children.add(_buildLeading());
     }
 
-    if (BarScope.of(context).mode != BarMode.expanded) return children;
+    if (SideBarScope.of(context).mode != SideBarMode.expanded) return children;
 
     if (widget.item.title != null) {
       children.add(SizedBox(width: _style.gap));
@@ -144,10 +144,10 @@ class _BuildBarItemState extends State<_BuildBarItem> {
       color: _isSelected ? _style.selectedIndicatorColor : Colors.transparent,
     );
     return Border(
-      left: _style.indicatorAlign == BarIndicatorAlign.start
+      left: _style.indicatorAlign == SideBarIndicatorAlign.start
           ? side
           : BorderSide.none,
-      right: _style.indicatorAlign == BarIndicatorAlign.end
+      right: _style.indicatorAlign == SideBarIndicatorAlign.end
           ? side
           : BorderSide.none,
     );

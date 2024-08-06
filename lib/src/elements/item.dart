@@ -1,77 +1,83 @@
 import 'dart:ui';
 
-import 'package:bar/bar.dart';
 import 'package:flutter/material.dart';
+import 'package:sidebar/sidebar.dart';
 
 //?? Element
-/// A `BarItem` class that implements the `IndexableBarElement` interface.
+/// Represents an item in a sidebar.
 ///
-/// This class represents an item in a sidebar. It can contain leading and
-/// trailing widgets, a title, and a callback for selection.
+/// This class can contain various UI elements and behaviors, including
+/// customization options for its appearance and interaction.
 @immutable
-final class BarItem implements IndexableBarElement {
-  /// The index of the bar element.
+final class SideBarItem implements IndexableSideBarElement {
+  /// The index of the sidebar item.
   ///
-  /// This property holds the index value for the bar element.
+  /// This value determines the position of the item within the sidebar.
   @override
   final int index;
 
   /// The leading widget for the sidebar item.
   ///
-  /// This property is optional and can be null.
+  /// This property allows you to provide a widget to be displayed before
+  /// the main content of the item. It can be `null`.
   final Widget Function(bool selected)? leading;
 
   /// The title of the sidebar item.
   ///
-  /// This property is optional and can be null.
+  /// This property allows you to provide a title for the item. The title
+  /// can vary depending on the selection state and can be `null`.
   final String Function(bool selected)? title;
 
   /// The trailing widget for the sidebar item.
   ///
-  /// This property is optional and can be null.
+  /// This property allows you to provide a widget to be displayed after
+  /// the main content of the item. It can be `null`.
   final Widget Function(bool selected)? trailing;
 
   /// The callback function to be called when the item is selected.
   ///
-  /// This property is optional and can be null. It takes an integer parameter.
+  /// This function is triggered when the item is selected and can be used
+  /// to handle the selection event. It can be `null`.
   final Function(int)? onSelected;
 
   /// Determines whether selecting the item should trigger an index change.
   ///
-  /// This property is optional and defaults to true.
+  /// When set to `true`, selecting the item will cause an index change.
+  /// Defaults to `true`.
   final bool navigate;
 
-  /// The style for the bar item.
+  /// The style for the sidebar item.
   ///
-  /// This property holds the `BarItemTheme` which defines the appearance
-  /// of the bar item.
-  final BarItemTheme? style;
+  /// This property allows customization of the item's appearance. It can be `null`.
+  final SideBarItemTheme? style;
 
-  /// Creates a `BarItem` with the given properties.
-  const BarItem({
+  /// Creates a `SideBarItem` with the given properties.
+  ///
+  /// All parameters are optional and default values are used if not provided.
+  const SideBarItem({
     this.leading,
     this.title,
     this.trailing,
     this.onSelected,
     this.navigate = true,
     this.style,
-    this.index = 0,
+    this.index = -1,
   });
 
-  /// Creates a copy of this bar item with the given fields replaced with new values.
+  /// Creates a copy of this sidebar item with the given fields replaced with new values.
   ///
-  /// If any parameter is not provided, the current value will be used.
+  /// Parameters that are not provided will retain their current values.
   @override
-  BarItem copyWith({
+  SideBarItem copyWith({
     Widget Function(bool selected)? leading,
     String Function(bool selected)? title,
     Widget Function(bool selected)? trailing,
     Function(int)? onSelected,
     bool? navigate,
-    BarItemTheme? style,
+    SideBarItemTheme? style,
     int? index,
   }) {
-    return BarItem(
+    return SideBarItem(
       leading: leading ?? this.leading,
       title: title ?? this.title,
       trailing: trailing ?? this.trailing,
@@ -83,87 +89,101 @@ final class BarItem implements IndexableBarElement {
   }
 }
 
-/// An enumeration for specifying the alignment of the bar indicator.
-enum BarIndicatorAlign {
-  /// Aligns the indicator to the start of the bar item.
+/// Specifies the alignment of the sidebar indicator.
+enum SideBarIndicatorAlign {
+  /// Aligns the indicator to the start of the sidebar item.
   start,
 
-  /// Aligns the indicator to the end of the bar item.
+  /// Aligns the indicator to the end of the sidebar item.
   end,
 }
 
-/// A theme class for defining the appearance of an item in a sidebar.
+/// Defines the appearance of an item in a sidebar.
 ///
-/// This class provides properties to customize the title style, background colors,
-/// indicator appearance, and spacing of the bar item.
+/// This class provides properties for customizing the visual aspects and layout
+/// of the sidebar item.
 @immutable
-class BarItemTheme {
+class SideBarItemTheme {
   /// The style of the title text.
+  ///
+  /// This property allows you to define the text style for the title of the item.
   final TextStyle? titleStyle;
 
   /// The style of the title text when the item is selected.
+  ///
+  /// This property allows you to define the text style for the title when the item
+  /// is selected.
   final TextStyle? selectedTitleStyle;
 
   /// The background color of the item.
   ///
-  /// Defaults to `Colors.transparent`.
+  /// This property defines the background color of the item. Defaults to `Colors.transparent`.
   final Color backgroundColor;
 
   /// The background color of the item when it is selected.
   ///
+  /// This property defines the background color of the item when it is selected.
   /// Defaults to `Colors.transparent`.
   final Color selectedBackgroundColor;
 
   /// The background color of the item when it is hovered over.
   ///
+  /// This property defines the background color of the item when it is hovered over.
   /// Defaults to `Colors.grey`.
   final Color hoverBackgroundColor;
 
   /// The color of the indicator shown when the item is selected.
   ///
+  /// This property defines the color of the indicator when the item is selected.
   /// Defaults to `Colors.blue`.
   final Color selectedIndicatorColor;
 
   /// The width of the indicator shown when the item is selected.
   ///
-  /// Defaults to 2.0.
+  /// This property defines the width of the indicator when the item is selected.
+  /// Defaults to `2.0`.
   final double selectedIndicatorWidth;
 
   /// Whether to show the indicator when the item is selected.
   ///
-  /// Defaults to true.
+  /// This property determines if the indicator should be shown when the item is selected.
+  /// Defaults to `true`.
   final bool showSelectedIndicator;
 
   /// The alignment of the indicator shown when the item is selected.
   ///
-  /// Defaults to [BarIndicatorAlign.start].
-  final BarIndicatorAlign indicatorAlign;
+  /// This property defines the alignment of the indicator when the item is selected.
+  /// Defaults to `SideBarIndicatorAlign.start`.
+  final SideBarIndicatorAlign indicatorAlign;
 
   /// The gap between the item's content.
   ///
-  /// Defaults to 8.0.
+  /// This property defines the space between the content elements of the item.
+  /// Defaults to `8.0`.
   final double gap;
 
-  /// The padding around the content of the bar item.
+  /// The padding around the content of the sidebar item.
   ///
+  /// This property defines the space between the item's content and its boundary.
   /// Defaults to `EdgeInsets.all(8.0)`.
   final EdgeInsetsGeometry padding;
 
-  /// The margin around the content of the bar item.
+  /// The margin around the content of the sidebar item.
   ///
+  /// This property defines the space outside the boundary of the item.
   /// Defaults to `EdgeInsets.all(8.0)`.
   final EdgeInsetsGeometry margin;
 
-  /// The border radius of the bar item.
+  /// The border radius of the sidebar item.
   ///
+  /// This property defines the curvature of the item's corners.
   /// Defaults to `BorderRadius.circular(4.0)`.
   final BorderRadiusGeometry borderRadius;
 
-  /// Creates a `BarItemTheme`.
+  /// Creates a `SideBarItemTheme` with the given properties.
   ///
-  /// All parameters are optional. If not provided, they will have default values
-  /// where applicable.
-  const BarItemTheme({
+  /// All parameters are optional, with default values provided where applicable.
+  const SideBarItemTheme({
     this.titleStyle,
     this.selectedTitleStyle,
     this.backgroundColor = Colors.transparent,
@@ -172,7 +192,7 @@ class BarItemTheme {
     this.selectedIndicatorColor = Colors.blue,
     this.selectedIndicatorWidth = 2.0,
     this.showSelectedIndicator = true,
-    this.indicatorAlign = BarIndicatorAlign.start,
+    this.indicatorAlign = SideBarIndicatorAlign.start,
     this.gap = 8.0,
     this.padding = const EdgeInsets.all(8.0),
     this.margin = const EdgeInsets.all(8.0),
@@ -181,8 +201,8 @@ class BarItemTheme {
 
   /// Creates a copy of this theme with the given fields replaced with new values.
   ///
-  /// If any parameter is not provided, the current value will be used.
-  BarItemTheme copyWith({
+  /// Parameters that are not provided will retain their current values.
+  SideBarItemTheme copyWith({
     TextStyle? titleStyle,
     TextStyle? selectedTitleStyle,
     Color? backgroundColor,
@@ -191,13 +211,13 @@ class BarItemTheme {
     Color? selectedIndicatorColor,
     double? selectedIndicatorWidth,
     bool? showSelectedIndicator,
-    BarIndicatorAlign? indicatorAlign,
+    SideBarIndicatorAlign? indicatorAlign,
     double? gap,
     EdgeInsetsGeometry? padding,
     EdgeInsetsGeometry? margin,
     BorderRadiusGeometry? borderRadius,
   }) {
-    return BarItemTheme(
+    return SideBarItemTheme(
       titleStyle: titleStyle ?? this.titleStyle,
       selectedTitleStyle: selectedTitleStyle ?? this.selectedTitleStyle,
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -218,15 +238,16 @@ class BarItemTheme {
     );
   }
 
-  /// Linearly interpolates between two `BarItemTheme` objects.
+  /// Linearly interpolates between two `SideBarItemTheme` objects.
   ///
   /// The parameter [t] represents a fraction between 0.0 and 1.0 and is used to interpolate
   /// the values of the properties between the objects [a] and [b].
   ///
   /// If both [a] and [b] are `null`, this method returns `null`.
-  static BarItemTheme? lerp(BarItemTheme? a, BarItemTheme? b, double t) {
-    if (a == null && b == null) return null;
-    return BarItemTheme(
+  static SideBarItemTheme? lerp(
+      SideBarItemTheme? a, SideBarItemTheme? b, double t) {
+    if (identical(a, b)) return null;
+    return SideBarItemTheme(
       titleStyle: TextStyle.lerp(a?.titleStyle, b?.titleStyle, t),
       selectedTitleStyle:
           TextStyle.lerp(a?.selectedTitleStyle, b?.selectedTitleStyle, t),
@@ -248,8 +269,8 @@ class BarItemTheme {
           ? (a?.showSelectedIndicator ?? true)
           : (b?.showSelectedIndicator ?? true),
       indicatorAlign: t < 0.5
-          ? (a?.indicatorAlign ?? BarIndicatorAlign.start)
-          : (b?.indicatorAlign ?? BarIndicatorAlign.start),
+          ? (a?.indicatorAlign ?? SideBarIndicatorAlign.start)
+          : (b?.indicatorAlign ?? SideBarIndicatorAlign.start),
       gap: lerpDouble(a?.gap, b?.gap, t) ?? 8.0,
       padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t) ??
           const EdgeInsets.all(8.0),

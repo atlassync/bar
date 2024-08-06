@@ -1,4 +1,4 @@
-library bar;
+library sidebar;
 
 export 'src/element.dart';
 export 'src/mode.dart';
@@ -9,4 +9,4 @@ export 'src/elements/item.dart';
 export 'src/elements/empty.dart';
 export 'src/style.dart';
 export 'src/controller.dart';
-export 'src/bar.dart';
+export 'src/sidebar.dart';

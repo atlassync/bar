@@ -1,48 +1,50 @@
 import 'dart:ui';
 
-import 'package:bar/bar.dart';
 import 'package:flutter/material.dart';
+import 'package:sidebar/sidebar.dart';
 
 //?? Element
-/// A `BarDivider` class that implements the `BarElement` interface.
+/// Represents a divider element in a sidebar.
 ///
-/// This class represents a divider element for a sidebar with optional
-/// style properties. It provides a concrete implementation
-/// of the `BarElement` interface.
+/// The `SideBarDivider` class implements the `SideBarElement` interface and
+/// can include optional styling properties to customize its appearance.
 @immutable
-final class BarDivider implements BarElement {
-  /// The style of the divider, which can include properties like thickness and color.
-  final BarDividerTheme? style;
-
-  /// Creates a `BarDivider` with the given optional style.
+final class SideBarDivider implements SideBarElement {
+  /// The style of the divider.
   ///
-  /// The [style] parameter is optional and can be null.
-  const BarDivider({
+  /// This property allows you to specify the appearance of the divider,
+  /// including properties like thickness and color. It can be `null`.
+  final SideBarDividerTheme? style;
+
+  /// Creates a `SideBarDivider` with the given optional style.
+  ///
+  /// The [style] parameter is optional and can be `null`.
+  const SideBarDivider({
     this.style,
   });
 }
 
-
 //?? Theme
-/// A theme extension class for defining the appearance of a divider in a bar.
+/// Defines the appearance of a divider in a sidebar.
 ///
-/// This class provides properties to customize the thickness and color of the divider.
+/// The `SideBarDividerTheme` class provides properties to customize the
+/// thickness and color of the divider.
 @immutable
-class BarDividerTheme {
+class SideBarDividerTheme {
   /// The thickness of the divider.
   ///
-  /// Defaults to 2.0.
+  /// This property defines how thick the divider should be. Defaults to `2.0`.
   final double thickness;
 
   /// The color of the divider.
   ///
-  /// Defaults to `Colors.grey`.
+  /// This property defines the color of the divider. Defaults to `Colors.grey`.
   final Color color;
 
-  /// Creates a `BarDividerTheme`.
+  /// Creates a `SideBarDividerTheme`.
   ///
-  /// Both [thickness] and [color] are optional. If not provided, they default to 2.0 and `Colors.grey`, respectively.
-  const BarDividerTheme({
+  /// Both [thickness] and [color] are optional. If not provided, they default to `2.0` and `Colors.grey`, respectively.
+  const SideBarDividerTheme({
     this.thickness = 2.0,
     this.color = Colors.grey,
   });
@@ -50,29 +52,29 @@ class BarDividerTheme {
   /// Creates a copy of this theme with the given fields replaced with new values.
   ///
   /// If [thickness] or [color] are not provided, the current values will be used.
-  BarDividerTheme copyWith({
+  SideBarDividerTheme copyWith({
     double? thickness,
     Color? color,
   }) {
-    return BarDividerTheme(
+    return SideBarDividerTheme(
       thickness: thickness ?? this.thickness,
       color: color ?? this.color,
     );
   }
 
-  /// Linearly interpolates between two `BarDividerTheme` objects.
+  /// Linearly interpolates between two `SideBarDividerTheme` objects.
   ///
   /// The parameter [t] represents a fraction between 0.0 and 1.0 and is used to interpolate
   /// the values of [thickness] and [color] between the objects [a] and [b].
   ///
   /// If both [a] and [b] are `null`, this method returns `null`.
   /// If [a] and [b] are identical, this method returns `null`.
-  static BarDividerTheme? lerp(
-      BarDividerTheme? a, BarDividerTheme? b, double t) {
+  static SideBarDividerTheme? lerp(
+      SideBarDividerTheme? a, SideBarDividerTheme? b, double t) {
     if (identical(a, b)) {
       return null;
     }
-    return BarDividerTheme(
+    return SideBarDividerTheme(
       thickness: lerpDouble(a?.thickness, b?.thickness, t) ?? 2.0,
       color: Color.lerp(a?.color, b?.color, t) ?? Colors.grey,
     );

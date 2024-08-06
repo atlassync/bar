@@ -1,18 +1,20 @@
-import 'package:bar/bar.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sidebar/sidebar.dart';
 
 //?? Element
-/// A `BarAdapter` class that implements the `BarElement` interface.
+/// Adapts a `Widget` child for use in a sidebar.
 ///
-/// This class adapts a `Widget` child for use in a sidebar and provides a
-/// concrete implementation of the `BarElement` interface.
+/// The `SideBarAdapter` class implements the `SideBarElement` interface and
+/// provides a way to include a widget as a sidebar element.
 @immutable
-final class BarAdapter implements BarElement {
-  /// The child widget that this adapter holds for the sidebar.
+final class SideBarAdapter implements SideBarElement {
+  /// The child widget that this adapter holds.
+  ///
+  /// This widget is incorporated into the sidebar. It is a required parameter and cannot be `null`.
   final Widget child;
 
-  /// Creates a `BarAdapter` with the given child widget for the sidebar.
+  /// Creates a `SideBarAdapter` with the given child widget.
   ///
-  /// The [child] parameter is required and cannot be null.
-  const BarAdapter(this.child);
+  /// The [child] parameter is required and cannot be `null`.
+  const SideBarAdapter(this.child);
 }

@@ -1,26 +1,26 @@
-import 'package:bar/bar.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sidebar/sidebar.dart';
 
-/// A widget that provides access to the `BarController`, `BarTheme`, and `BarMode` 
+/// A widget that provides access to the `SideBarController`, `SideBarTheme`, and `SideBarMode`
 /// for its descendants.
 ///
-/// The `BarScope` class extends `InheritedWidget` and is used to pass the `BarController`,
-/// `BarTheme`, and `BarMode` down the widget tree. It allows widgets to access these 
-/// properties without needing to pass them explicitly through constructors.
-class BarScope extends InheritedWidget {
-  /// The controller that manages the state and behavior of the bar.
-  final BarController controller;
+/// The `SideBarScope` class extends `InheritedWidget` and facilitates passing the `SideBarController`,
+/// `SideBarTheme`, and `SideBarMode` down the widget tree. This allows descendant widgets to access
+/// these properties without having to explicitly pass them through constructors.
+class SideBarScope extends InheritedWidget {
+  /// The controller that manages the state and behavior of the sidebar.
+  final SideBarController controller;
 
-  /// The theme that defines the visual styling of the bar.
-  final BarTheme theme;
+  /// The theme that defines the visual styling of the sidebar.
+  final SideBarTheme theme;
 
-  /// The mode that determines the layout and behavior of the bar.
-  final BarMode mode;
+  /// The mode that determines the layout and behavior of the sidebar.
+  final SideBarMode mode;
 
-  /// Creates a `BarScope` widget.
+  /// Creates a `SideBarScope` widget.
   ///
   /// The [controller], [theme], [mode], and [child] parameters are required.
-  const BarScope({
+  const SideBarScope({
     super.key,
     required this.controller,
     required this.theme,
@@ -28,29 +28,29 @@ class BarScope extends InheritedWidget {
     required super.child,
   });
 
-  /// Retrieves the nearest `BarScope` instance up the widget tree.
+  /// Retrieves the nearest `SideBarScope` instance up the widget tree.
   ///
-  /// This method is used to access the `BarScope` instance and its properties from 
-  /// the context. Returns the `BarScope` instance if found, otherwise throws an error.
-  static BarScope of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<BarScope>()!;
+  /// This method is used to access the `SideBarScope` instance and its properties from 
+  /// the given [context]. It returns the `SideBarScope` instance if found, otherwise throws an error.
+  static SideBarScope of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<SideBarScope>()!;
   }
 
-  /// Retrieves the nearest `BarScope` instance up the widget tree, if it exists.
+  /// Retrieves the nearest `SideBarScope` instance up the widget tree, if it exists.
   ///
-  /// This method is used to access the `BarScope` instance and its properties from 
-  /// the context. Returns `null` if no `BarScope` is found in the widget tree.
-  static BarScope? maybeOf(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<BarScope>();
+  /// This method is used to access the `SideBarScope` instance and its properties from 
+  /// the given [context]. It returns `null` if no `SideBarScope` is found in the widget tree.
+  static SideBarScope? maybeOf(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<SideBarScope>();
   }
 
   /// Determines whether the widget tree should be rebuilt when the inherited widget changes.
   ///
-  /// The [updateShouldNotify] method is called when the `BarScope` widget is rebuilt,
+  /// The [updateShouldNotify] method is called when the `SideBarScope` widget is rebuilt,
   /// and it decides whether the descendants should be rebuilt based on changes to 
   /// the `controller`, `theme`, or `mode` properties.
   @override
-  bool updateShouldNotify(covariant BarScope oldWidget) {
+  bool updateShouldNotify(covariant SideBarScope oldWidget) {
     return oldWidget.controller != controller ||
         oldWidget.theme != theme ||
         oldWidget.mode != mode;

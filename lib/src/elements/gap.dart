@@ -1,21 +1,21 @@
-import 'package:bar/bar.dart';
 import 'package:flutter/foundation.dart';
+import 'package:sidebar/sidebar.dart';
 
 //?? Element
-/// A `BarGap` class that implements the `BarElement` interface.
+/// Represents a gap or space in a sidebar.
 ///
-/// This class represents a gap or space in a sidebar. It provides a concrete 
-/// implementation of the `BarElement` interface.
+/// This class provides a concrete implementation of the `SideBarElement` interface
+/// to create a gap with a specified size.
 @immutable
-final class BarGap implements BarElement {
+final class SideBarGap implements SideBarElement {
   /// The size of the gap.
   ///
-  /// This property specifies the amount of space to be created as a gap in the sidebar.
-  /// defaults to 8.0.
+  /// This property defines the amount of space to be created as a gap in the sidebar.
+  /// Defaults to `8.0`.
   final double gap;
 
-  /// Creates a `BarGap` with the specified gap size.
+  /// Creates a `SideBarGap` with the specified gap size.
   ///
-  /// The `gap` parameter is required and cannot be null.
-  const BarGap([this.gap = 8.0]);
+  /// The `gap` parameter is required and cannot be `null`. If not provided, it defaults to `8.0`.
+  const SideBarGap([this.gap = 8.0]);
 }

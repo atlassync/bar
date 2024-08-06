@@ -1,12 +1,12 @@
-import 'package:bar/bar.dart';
 import 'package:flutter/material.dart';
+import 'package:sidebar/sidebar.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MainApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
 
   ThemeData get darkTheme => ThemeData.dark(useMaterial3: true).copyWith(
         extensions: [
-          const BarTheme(
+          const SideBarTheme(
             backgroundColor: Colors.black54,
             padding: EdgeInsets.symmetric(vertical: 48.0, horizontal: 0.0),
             border: Border(
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
 
   ThemeData get lightTheme => ThemeData.light(useMaterial3: true).copyWith(
         extensions: [
-          const BarTheme(
+          const SideBarTheme(
             backgroundColor: Colors.white54,
             padding: EdgeInsets.symmetric(vertical: 48.0, horizontal: 0.0),
             border: Border(
@@ -62,10 +62,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Row(
         children: [
-          Bar(
-            controller: BarController(),
+          SideBar(
+            controller: SideBarController(),
             header: const FlutterLogo(),
-            mode: BarMode.auto,
+            mode: SideBarMode.auto,
             elements: _elements,
           ),
         ],
@@ -73,21 +73,21 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  List<BarElement> get _elements =>  [
-        const BarGap(16),
-        BarItem(
+  List<SideBarElement> get _elements => [
+        const SideBarGap(16),
+        SideBarItem(
           leading: (_) => const Icon(Icons.home),
           title: (_) => 'Home',
           trailing: (_) => const Icon(Icons.sunny),
         ),
-        const BarGap(16),
-        BarItem(
+        const SideBarGap(16),
+        SideBarItem(
           leading: (_) => const Icon(Icons.message_rounded),
           title: (_) => 'Messages',
         ),
-        const BarGap(16),
-        const BarDivider(),
-        const BarGap(16),
-        const BarAdapter(FlutterLogo())
+        const SideBarGap(16),
+        const SideBarDivider(),
+        const SideBarGap(16),
+        const SideBarAdapter(FlutterLogo())
       ];
 }
